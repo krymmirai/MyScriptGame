@@ -1,0 +1,226 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/krymmirai/SaveProject/main/HideOpen",true))()
+local lp = game.Players.LocalPlayer
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+    end
+    wait()
+function Teleportmap(P1)
+    local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance < 150 then
+        Speed = 15000
+    elseif Distance < 200 then
+        Speed = 15000
+    elseif Distance < 300 then
+        Speed = 15000
+    elseif Distance < 500 then
+        Speed = 15000
+    elseif Distance < 1000 then
+        Speed = 15000
+    elseif Distance >= 1000 then
+        Speed = 15000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    if _G.Stop_Tween==true then
+        game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+            {CFrame = P1}
+        ):Cancel()
+    end
+    _G.Clip = true
+    wait(Distance/Speed)
+    _G.Clip = false
+end
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+--UI Library Window
+
+local Window = Library.CreateLib("Zero2 Hub / Ijul Piece 2 ", "Midnight")
+local status = Window:NewTab("Status")
+local Misc = Window:NewTab("Reroll")
+local Tele = Window:NewTab("Teleport")
+
+--status
+local stat = status:NewSection("Status")
+stat:NewLabel("Name : ".. game.Players.LocalPlayer.Character.Name .." [Dev]")
+stat:NewLabel("PlaceID : ".. game.PlaceId .."")
+stat:NewButton("Copy PlaceId", "ButtonInfo", function()
+    
+end)
+stat:NewLabel("JobID : ".. game.JobId .."")
+stat:NewButton("Copy JobId", "ButtonInfo", function()
+    setclipboard(game.JobId)
+end)
+stat:NewLabel("Script Make By SadThudatinh (Owner)")
+stat:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
+    Library:ToggleUI()
+end)
+--Teleportmap
+local tele = Tele:NewSection("Status")
+tele:NewButton("Windmill village", "???", function()
+    Teleportmap(CFrame.new(-559, 28.13, 177.33))
+end)
+
+tele:NewButton("Buggy Island", "???", function()
+    Teleportmap(CFrame.new(-1194.36, 14.13, 233.31))
+end)
+
+tele:NewButton("Ice Island", "???", function()
+    Teleportmap(CFrame.new(-2156.61, 15.03, -571.52))
+end)
+
+tele:NewButton("sand 1 Island", "???", function()
+    Teleportmap(CFrame.new(-1812, 14, 1377))
+end)
+
+tele:NewButton("exchange", "???", function()
+    Teleportmap(CFrame.new(-1944, 124, 3064))
+end)
+--Misc
+
+local misc = Misc:NewSection("Misc")
+misc:NewButton("Redeem All Code", "???", function()
+    code()
+end)
+
+getgenv().trait = true
+
+misc:NewToggle("Auto Trait", "???", function(A1)
+    getgenv().trait = A1
+    if A1 then
+        dotrait();
+    end
+end)
+
+function dotrait()
+    spawn(function()
+        while trait == true do
+            local args = {[1] = 1}
+            traitreroll()
+            wait()
+        end
+    end)
+ end
+
+
+--function
+
+function code()
+    local args = {
+        [1] = "500KVISITS"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "diegointhedark"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Sub2ink"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "400KVISITS"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "sleep"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "lknkvgzc"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "ktydrfhjklkhfhg"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Mupeng2"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "1KPlaying"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "50KVISITS"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "UPDATE4"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "25KVISITS"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "HaoHaki"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Heian"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Sub2Arthur"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Sub2Sai"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Sub2FazzM"
+    }
+    
+    game:GetService("ReplicatedStorage").Events.RedeemCodes:FireServer(unpack(args))
+    wait(1)
+    local args = {
+        [1] = "Sub2YahikoDoidao"
+    }
+end
+
+function traitreroll()
+    local args = {
+        [1] = "Normal"
+    }
+    
+    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("SpinTrait"):FireServer(unpack(args))
+end
