@@ -1,0 +1,236 @@
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextButton = Instance.new("TextButton")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 0.700
+Frame.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BorderSizePixel = 2
+Frame.Position = UDim2.new(0, 0, 0.225124374, 0)
+Frame.Size = UDim2.new(0, 100, 0, 36)
+
+TextButton.Parent = Frame
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundTransparency = 0.950
+TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BorderSizePixel = 0
+TextButton.Size = UDim2.new(0, 100, 0, 36)
+TextButton.Font = Enum.Font.Arcade
+TextButton.Text = "Hide / Open"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextSize = 14.000
+TextButton.MouseButton1Down:Connect(function()
+	game:GetService("VirtualInputManager"):SendKeyEvent(true, "F6" , false , game)
+end)
+
+UITextSizeConstraint.Parent = TextButton
+UITextSizeConstraint.MaxTextSize = 50
+
+
+local lp = game.Players.LocalPlayer
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+    end
+    wait()
+function Teleportmap(P1)
+    local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance < 150 then
+        Speed = 15000
+    elseif Distance < 200 then
+        Speed = 15000
+    elseif Distance < 300 then
+        Speed = 15000
+    elseif Distance < 500 then
+        Speed = 15000
+    elseif Distance < 1000 then
+        Speed = 15000
+    elseif Distance >= 1000 then
+        Speed = 15000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    if _G.Stop_Tween==true then
+        game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+            {CFrame = P1}
+        ):Cancel()
+    end
+    _G.Clip = true
+    wait(Distance/Speed)
+    _G.Clip = false
+end
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+--UI Library Window
+
+local Window = Library.CreateLib("Zero2 Hub / Ijul Piece 2 ", "Midnight")
+local status = Window:NewTab("Status")
+local AutoFarm = Window:NewTab("Auto Skill / Farm")
+local Misc = Window:NewTab("Misc")
+--status
+local stat = status:NewSection("Status")
+stat:NewLabel("Name : ".. game.Players.LocalPlayer.Character.Name .." [Dev]")
+stat:NewLabel("PlaceID : ".. game.PlaceId .."")
+stat:NewButton("Copy PlaceId", "ButtonInfo", function()
+    
+end)
+stat:NewLabel("JobID : ".. game.JobId .."")
+stat:NewButton("Copy JobId", "ButtonInfo", function()
+    setclipboard(game.JobId)
+end)
+stat:NewLabel("Script Make By SadThudatinh (Owner)")
+stat:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
+    Library:ToggleUI()
+end)
+
+--Misc
+local etc = Misc:NewSection("Status")
+
+etc:NewButton("Auto Equip", "ButtonInfo", function()
+    equip()
+end)
+
+
+
+getgenv().Boss = true
+
+etc:NewToggle("Auto Boss", "???", function(AA1)
+    getgenv().Boss = AA1
+    if AA1 then
+        doboss();
+    end
+end)
+
+function doboss()
+    spawn(function()
+        while Boss == true do
+            local args = {[1] = 1}
+            Teleportmap(CFrame.new(857.57, 21.65, 176.87))
+            local args = {
+                [1] = "SukunaV2",
+                [2] = "Currency"
+            }
+            
+            game:GetService("ReplicatedStorage").Events.BossSpawner:FireServer(unpack(args))
+            wait(1.5)
+        end
+    end)
+ end
+
+ getgenv().Money = true
+
+ etc:NewToggle("Auto Money", "???", function(AA2)
+     getgenv().Money = AA2
+     if AA2 then
+        domoney();
+     end
+ end)
+ 
+ function domoney()
+     spawn(function()
+         while Money == true do
+             local args = {[1] = 1}
+             Teleportmap(CFrame.new(701.03, 71.03, -1813.32))
+             wait(1.5)
+         end
+     end)
+  end
+
+--Farm
+local farm = AutoFarm:NewSection("Status")
+getgenv().Az = true
+
+farm:NewToggle("Auto Z", "Keypress", function(A1)
+    getgenv().Az = A1
+    if A1 then
+        doz();
+    end
+end)
+
+function doz()
+    spawn(function()
+        while Az == true do
+            local args = {[1] = 1}
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.Z,false,game) 
+            wait(1)
+        end
+    end)
+ end
+
+ getgenv().Ax = true
+
+ farm:NewToggle("Auto X", "Keypress", function(A2)
+     getgenv().Ax = A2
+     if A2 then
+         dox();
+     end
+ end)
+ 
+ function dox()
+     spawn(function()
+         while Ax == true do
+             local args = {[1] = 1}
+             game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.X,false,game) 
+             wait(1)
+         end
+     end)
+  end
+
+  getgenv().Ac = true
+
+  farm:NewToggle("Auto C", "Keypress", function(A3)
+      getgenv().Ac = A3
+      if A3 then
+          doc();
+      end
+  end)
+  
+  function doc()
+      spawn(function()
+          while Ac == true do
+              local args = {[1] = 1}
+              game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.C,false,game) 
+              wait(1)
+          end
+      end)
+   end
+
+
+getgenv().Av = true
+
+farm:NewToggle("Auto V", "Keypress", function(A4)
+    getgenv().Av = A4
+    if A4 then
+        dov();
+    end
+end)
+
+function dov()
+    spawn(function()
+        while Av == true do
+            local args = {[1] = 1}
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,Enum.KeyCode.V,false,game) 
+            wait(1)
+        end
+    end)
+ end
+
+
+ function equip()
+    for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+        if v.Name == "SukunaV2" then
+            v.Parent = game.Players.LocalPlayer.Character
+        end
+        end
+end
