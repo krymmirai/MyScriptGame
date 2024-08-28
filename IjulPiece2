@@ -143,6 +143,7 @@ function doboss()
      spawn(function()
          while Money == true do
              local args = {[1] = 1}
+equip()
              Teleportmap(CFrame.new(701.03, 71.03, -1813.32))
              wait(1.5)
          end
