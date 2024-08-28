@@ -117,6 +117,7 @@ function doboss()
     spawn(function()
         while Boss == true do
             local args = {[1] = 1}
+    equip()
             Teleportmap(CFrame.new(857.57, 21.65, 176.87))
             local args = {
                 [1] = "SukunaV2",
