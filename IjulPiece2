@@ -81,12 +81,13 @@ function dobossitem()
             local args = {[1] = 1}
     equip()
             Teleportmap(CFrame.new(857.57, 21.65, 176.87))
-            local args = {
-                [1] = "SukunaV2",
-                [2] = "Item"
-            }
-            
-            game:GetService("ReplicatedStorage").Events.BossSpawner:FireServer(unpack(args))
+local args = {
+    [1] = "Aizen",
+    [2] = "Currency"
+}
+
+game:GetService("ReplicatedStorage").Events.BossSpawner:FireServer(unpack(args))
+
             wait(1.5)
         end
     end)
@@ -109,11 +110,11 @@ function doboss()
     equip()
             Teleportmap(CFrame.new(857.57, 21.65, 176.87))
             local args = {
-                [1] = "SukunaV2",
-                [2] = "Currency"
-            }
-            
-            game:GetService("ReplicatedStorage").Events.BossSpawner:FireServer(unpack(args))
+    [1] = "Aizen",
+    [2] = "Currency"
+}
+
+game:GetService("ReplicatedStorage").Events.BossSpawner:FireServer(unpack(args))
             wait(1.5)
         end
     end)
