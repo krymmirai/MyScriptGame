@@ -1,9 +1,14 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/krymmirai/SaveProject/main/HideOpen",true))()
-
+getgenv().Enabled = true
+local Run = game:GetService("RunService")
 local plr = game.Players.LocalPlayer
 local cha = plr.Character or plr.CharacterAdded:Wait()
 local hrp = cha:WaitForChild("HumanoidRootPart")
 local hum = cha:WaitForChild("Humanoid")
+local x = require(game:GetService("ReplicatedStorage").WeaponData)
+_G.Weapon = nil 
+_G.WeaponType = nil 
+_G.WeaponM1 = nil
 
 plr.CharacterAdded:Connect(function(character)
     cha = character 
@@ -16,33 +21,74 @@ if not game:IsLoaded() then
     wait()
 
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-
---function
+--test
+local Run = game:GetService("RunService")
 local plr = game.Players.LocalPlayer
-local cha = plr.Character or plr.CharacterAdded:Wait()
-local hrp = cha:WaitForChild("HumanoidRootPart")
-local hum = cha:WaitForChild("Humanoid")
-local x = require(game:GetService("ReplicatedStorage").WeaponData)
-local types = {"SFOTH", "Sword", "Club", "Longsword", "Katana", "Axe", "Spear", "Domini", "Knife", "Aguman", "Trident", "Mallet", "Blade", "Gauntlets", "Lance", "Scythe", "Twin Blade", "Greatsword", "Falchion", "Fans", "Claws"}
-local request = http_request or request or HttpPost or syn.request
-local senv = getsenv(plr.PlayerScripts.Client)
-local hooked = {}
-_G.Weapon = nil 
-_G.WeaponType = nil 
-_G.WeaponM1 = nil
-local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
+local weaponData = require(game:GetService("ReplicatedStorage").WeaponData)
+local combatData = game:GetService("ReplicatedStorage").CombatData
 
-if game:GetService("ReplicatedStorage"):WaitForChild("UnloadedMaps") then 
-    for i,v in pairs(game:GetService("ReplicatedStorage"):WaitForChild("UnloadedMaps"):GetChildren()) do 
-        v.Parent = game.Workspace.Maps 
-    end 
+local WeaponName, WeaponType, WeaponM1Name
+
+local function getM1Name(Weapon, WeaponType)
+    local weaponModule = require(combatData[WeaponType])
+    
+    local Data = {
+        Character = game.Players.LocalPlayer.Character,
+        Stats = {AS = 1},
+        Tools = {Weapon},
+        Anim = require(game.ReplicatedStorage.AnimationService),
+    }
+    
+    for i,v in next, weaponModule(Data, Weapon) do
+        if v.LMB then
+            return v.LMB[1]
+        end
+    end
 end
 
-if game:GetService("ReplicatedStorage"):WaitForChild("UnloadedEnemies") then 
-    for i,v in pairs(game:GetService("ReplicatedStorage"):WaitForChild("UnloadedEnemies"):GetChildren()) do 
-        v.Parent = game.Workspace.NPCs
-    end 
+local meleeWeaponNames = {
+    "Sword",
+    "Club",
+    "Longsword",
+    "Axe",
+    "Katana",
+    "Spear",
+    "Axe",
+    "Knife",
+    "Mallet",
+    "Blade",
+    "Gauntlets",
+    "Lance",
+    "Scythe",
+    "Twin Blade"
+}
+
+local function isMeleeWeapon(WeaponName)
+    if weaponData[WeaponName] and table.find(meleeWeaponNames, weaponData[WeaponName].Type) then
+        return true
+    end
 end
+
+for i,v in next, plr.Character.Equipment:GetChildren() do
+    if isMeleeWeapon(v.Name) then
+        WeaponName, WeaponType = v.Name, weaponData[v.Name].Type
+        WeaponM1Name = getM1Name(v, WeaponType)
+    end
+end
+
+plr.Character.Equipment.ChildAdded:Connect(function(v)
+    if isMeleeWeapon(v.Name) then
+        WeaponName, WeaponType = v.Name, weaponData[v.Name].Type
+        WeaponM1Name = getM1Name(v, WeaponType)
+    end
+end)
+
+local function DamageMob(mob)
+    if mob and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+        plr.Character.Combat.RemoteEvent:FireServer("Input", WeaponName, math.random(), WeaponM1Name.."Event", mob.PrimaryPart)
+    end
+end
+--function
 
 plr.CharacterAdded:Connect(function(character)
     cha = character 
@@ -60,66 +106,6 @@ else
     local folder = Instance.new("Folder")
     folder.Parent = game:GetService("Workspace")
     folder.Name = "Stuff"
-end 
-
-local drops = {} 
-
-for i,v in pairs(x) do 
-    if (not table.find(drops, i)) then 
-        table.insert(drops, i)
-        table.sort(drops)
-    end 
-end 
-
-local enemies = {} 
-
-for i,v in pairs(game.Workspace.NPCs:GetChildren()) do 
-    local split = string.split(v.Name, "Lv")
-    if (not table.find(enemies, split[1])) then 
-        table.insert(enemies, split[1])
-        table.sort(enemies)
-    end 
-end 
-
-game.Workspace.NPCs.ChildAdded:Connect(function(child)
-    local split = string.split(child.Name, "Lv")
-    if (not table.find(enemies, split[1])) then 
-        table.insert(enemies, split[1])
-        table.sort(enemies)
-    end 
-end)
-
-local oldmt 
-oldmt = hookmetamethod(game, "__index", function(self, index)
-    if self == hum and index == ("WalkSpeed" or "JumpPower") then
-        return 16
-    end 
-    return oldmt(self, index)
-end)
-
-local fixes = {
-    ["K"] = 10 ^ 3,
-    ["M"] = 10 ^ 6,
-    ["B"] = 10 ^ 9,
-    ["T"] = 10 ^ 12,
-    ["Qd"] = 10 ^ 15, 
-    ["Qn"] = 10 ^ 18,
-    ["Sx"] = 10 ^ 21,
-    ["Sp"] = 10 ^ 24
-}
-
-
-local function getallnearby(range)
-    local atable = {} 
-    for i,v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do 
-        if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then 
-            local distance = (v.HumanoidRootPart.Position - hrp.Position).Magnitude 
-            if distance < (range or 15) then 
-                table.insert(atable, v.HumanoidRootPart)
-            end 
-        end 
-    end 
-    return atable
 end 
 
 cha.Equipment.ChildAdded:Connect(function(child)
@@ -140,28 +126,6 @@ cha.Equipment.ChildAdded:Connect(function(child)
         end
     end
 end) 
-
-for i,v in pairs(cha.Equipment:GetChildren()) do 
-    if x[v.Name] and table.find(types, x[v.Name].Type) then 
-        _G.Weapon = v.Name 
-        _G.WeaponType = x[v.Name].Type 
-        local req = require(game:GetService("ReplicatedStorage").CombatData[_G.WeaponType])
-        for i,v in pairs(debug.getconstants(req)) do 
-            if v == "SlashEvent" then 
-                _G.WeaponM1 = "SlashEvent"
-            elseif v == "StabEvent" then 
-                _G.WeaponM1 = "StabEvent"
-            elseif v == "SlamEvent" then 
-                _G.WeaponM1 = "SlamEvent"
-            elseif v == "JoustHurt" then 
-                _G.WeaponM1 = "JoustHurt"
-            end 
-        end
-    end 
-end 
-
-
-
 
 --UI Library Window
 
@@ -198,11 +162,15 @@ end)
 function doaura()
     spawn(function()
         while Killaura == true do
-            if getallnearby(40) ~= 0 then 
-                for i,v in pairs(getallnearby(40)) do 
-                    cha.Combat.RemoteEvent:FireServer("Input", _G.Weapon, math.random, _G.WeaponM1, v)
-                end 
-            end 
+            if getgenv().Enabled ~= true then return end
+    task.wait(0.1)
+    for i,v in next, workspace.NPCs:GetChildren() do
+        local dist = (plr.Character.PrimaryPart.Position - v.PrimaryPart.Position).Magnitude
+
+        if dist < getgenv().MaxRange then
+            DamageMob(v)
+        end
+    end
             task.wait()
         end
     end)
