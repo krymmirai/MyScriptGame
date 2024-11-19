@@ -1,0 +1,157 @@
+local lp = game.Players.LocalPlayer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/krymmirai/SaveProject/main/HideOpen",true))()
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+    end
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+--UI Library Window
+
+local Window = Library.CreateLib("Zero2 Hub / Arknights//ACG Operation 1.2", "Midnight")
+local status = Window:NewTab("Status")
+local Misc = Window:NewTab("Misc")
+local Boss = Window:NewTab("Boss")
+--status
+local stat = status:NewSection("Status")
+stat:NewLabel("Name : ".. game.Players.LocalPlayer.Character.Name .." [Dev]")
+stat:NewLabel("PlaceID : ".. game.PlaceId .."")
+stat:NewButton("Copy PlaceId", "ButtonInfo", function()
+    
+end)
+stat:NewLabel("JobID : ".. game.JobId .."")
+stat:NewButton("Copy JobId", "ButtonInfo", function()
+    setclipboard(game.JobId)
+end)
+stat:NewLabel("Script Make By SadThudatinh (Owner)")
+stat:NewKeybind("Toggle ui", "Toggle the ui yes", Enum.KeyCode.F6, function()
+    Library:ToggleUI()
+end)
+--boss
+local bo = Boss:NewSection("Boss")
+
+bo:NewButton("P1", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(827,-215,1524)
+end)
+
+bo:NewButton("P2", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-639,101,559)
+end)
+
+bo:NewButton("P3", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-774,6,-222)
+end)
+
+bo:NewButton("P4", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2238,4331,1650)
+end)
+
+--Misc
+local etc = Misc:NewSection("Status")
+
+etc:NewButton("Doro", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4406,2489,3884)
+end)
+
+etc:NewButton("Lamia", "ButtonInfo", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(49,3321,-1065)
+end)
+
+getgenv().Killall = true
+    etc:NewToggle("Kill All", "bruh", function(a1)
+        getgenv().Killall = a1
+        if a1 then
+            dokill();
+        end
+    end)
+
+    function dokill()
+        spawn(function()
+            while Killall == true do
+                kill()
+                wait(0.9)
+            end
+        end)
+     end
+
+     getgenv().Aitem = true
+     etc:NewToggle("Auto Item", "bruh", function(a4)
+         getgenv().Aitem = a4
+         if a4 then
+             doitem();
+         end
+     end)
+     
+     function doitem()
+         spawn(function()
+             while Aitem == true do
+               item()
+                 wait(3)
+             end
+         end)
+      end
+
+
+getgenv().Aroll = true
+     etc:NewToggle("Auto Recruitment Ticket", "bruh", function(a2)
+         getgenv().Aroll = a2
+         if a2 then
+             doroll();
+         end
+     end)
+     
+     function doroll()
+         spawn(function()
+             while Aroll == true do
+                 roll()
+                 wait(0.)
+             end
+         end)
+      end
+
+
+      getgenv().Adoro = true
+      etc:NewToggle("Auto Spawn Doro", "bruh", function(a3)
+          getgenv().Adoro = a3
+          if a3 then
+              dodoro();
+          end
+      end)
+      
+      function dodoro()
+          spawn(function()
+              while Adoro == true do
+                spawndoro()
+                  wait(0.3)
+              end
+          end)
+       end
+
+
+--functions
+
+function item()
+    for k,v in pairs(game.Workspace:GetDescendants()) do
+        if v:IsA("BasePart") and v:FindFirstChild("TouchInterest") then
+           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+           wait() 
+       end
+   end
+end
+
+function spawndoro()
+    game:GetService("ReplicatedStorage").DungeonSpawn.DoroSpawn:FireServer()
+end
+
+function roll()
+    game:GetService("ReplicatedStorage").CheckEvents.RecruitmentBlueArchive:InvokeServer()
+end
+
+function kill()
+    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", 112412400000)
+sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", 112412400000)
+for i,d in pairs(game.Workspace:GetDescendants()) do
+    if d.ClassName == 'Humanoid' and d.Parent.Name ~= game.Players.LocalPlayer.Name then
+        d.Health = 0
+    end
+end
+end
